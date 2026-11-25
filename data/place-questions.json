@@ -1,0 +1,86 @@
+{
+  "questions": [
+    {
+      "id": "seed-q-rara-lake-winter",
+      "placeId": "rara-lake",
+      "userId": "seed-user-3",
+      "authorName": "Rohan Karki",
+      "text": "Is Rara Lake accessible in winter?",
+      "status": "approved",
+      "bestAnswerId": "seed-a-rara-lake-winter",
+      "createdAt": "2026-01-08T00:00:00.000Z",
+      "answers": [
+        {
+          "id": "seed-a-rara-lake-winter",
+          "questionId": "seed-q-rara-lake-winter",
+          "userId": "admin-demo",
+          "authorName": "Admin",
+          "text": "Roads may be blocked due to snow. Talcha airport flights are also irregular in winter. Best time is spring or autumn for reliable access.",
+          "upvotes": ["seed-user-1", "seed-user-2"],
+          "createdAt": "2026-01-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "seed-q-pokhara-paragliding",
+      "placeId": "pokhara",
+      "userId": "seed-user-1",
+      "authorName": "Jay Prakash",
+      "text": "Is paragliding in Pokhara safe for first-timers?",
+      "status": "approved",
+      "createdAt": "2026-02-01T00:00:00.000Z",
+      "answers": [
+        {
+          "id": "seed-a-pokhara-paragliding",
+          "questionId": "seed-q-pokhara-paragliding",
+          "userId": "admin-demo",
+          "authorName": "Admin",
+          "text": "Yes — licensed operators fly tandem with experienced pilots. Mornings from Sarangkot are calmest. Book with registered companies only.",
+          "upvotes": ["seed-user-2"],
+          "createdAt": "2026-02-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "seed-q-rara-winter",
+      "placeId": "seed-rara-viewpoint",
+      "userId": "seed-user-3",
+      "authorName": "Rohan Karki",
+      "text": "Is Rara Lake accessible in winter?",
+      "status": "approved",
+      "bestAnswerId": "seed-a-rara-winter",
+      "createdAt": "2026-01-08T00:00:00.000Z",
+      "answers": [
+        {
+          "id": "seed-a-rara-winter",
+          "questionId": "seed-q-rara-winter",
+          "userId": "admin-demo",
+          "authorName": "Admin",
+          "text": "Roads may be blocked due to snow. Talcha airport flights are also irregular in winter. Best time is spring or autumn for reliable access.",
+          "upvotes": ["seed-user-1", "seed-user-2"],
+          "createdAt": "2026-01-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "seed-q-rara-cost",
+      "placeId": "seed-rara-viewpoint",
+      "userId": "seed-user-1",
+      "authorName": "Jay Prakash",
+      "text": "How much does it cost to reach Murma Viewpoint from Nepalgunj?",
+      "status": "approved",
+      "createdAt": "2026-02-14T00:00:00.000Z",
+      "answers": [
+        {
+          "id": "seed-a-rara-cost-1",
+          "questionId": "seed-q-rara-cost",
+          "userId": "seed-user-2",
+          "authorName": "Anonymous",
+          "text": "Flight to Talcha plus jeep to Rara is roughly NPR 15,000–20,000 one way per person, depending on season. Budget extra for permits and lodge stays.",
+          "upvotes": ["seed-user-3"],
+          "createdAt": "2026-02-15T00:00:00.000Z"
+        }
+      ]
+    }
+  ]
+}
