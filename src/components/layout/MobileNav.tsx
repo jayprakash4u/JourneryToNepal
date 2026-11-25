@@ -1,8 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import { ChevronDown, LogOut, Menu, PlusCircle, ShieldCheck, UserCircle, X } from "lucide-react";
 import { useCallback, useEffect, useId, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
+import Link from "next/link";
+import { ChevronDown, LogOut, Menu, PlusCircle, ShieldCheck, X } from "lucide-react";
 import { classNames } from "@/utils";
 import { MAIN_NAV, PROFILE_LINKS } from "@/lib/navigation";
 import { RECOMMEND_COPY, RECOMMEND_PLACE_PATH } from "@/lib/recommend";
@@ -28,7 +29,7 @@ function MobileLinkList({
           <li key={item.href}>
             <Link
               href={item.href}
-              className="flex min-h-[44px] items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-text-primary transition-colors hover:bg-primary/5 active:bg-primary/10"
+              className="flex min-h-[44px] items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-800 transition-colors hover:bg-slate-100 hover:text-primary active:bg-slate-200"
               onClick={onNavigate}
             >
               {Icon && (
@@ -46,18 +47,20 @@ function MobileLinkList({
 function MobileAccordion({
   label,
   children,
+  defaultOpen = false,
 }: {
   label: string;
   children: ReactNode;
+  defaultOpen?: boolean;
 }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(defaultOpen);
   const panelId = useId();
 
   return (
-    <div className="border-b border-border-light">
+    <div className="border-b border-gray-100">
       <button
         type="button"
-        className="flex min-h-[48px] w-full items-center justify-between py-3 text-left text-sm font-semibold text-text-primary"
+        className="flex min-h-[48px] w-full items-center justify-between py-3 text-left text-sm font-bold text-slate-900 transition-colors hover:text-primary"
         aria-expanded={isOpen}
         aria-controls={panelId}
         onClick={() => setIsOpen((current) => !current)}
@@ -65,8 +68,8 @@ function MobileAccordion({
         <span>{label}</span>
         <ChevronDown
           className={classNames(
-            "h-4 w-4 text-text-muted transition-transform duration-200",
-            isOpen && "rotate-180"
+            "h-4 w-4 text-slate-400 transition-transform duration-200",
+            isOpen && "rotate-180 text-primary"
           )}
           aria-hidden
         />
@@ -88,23 +91,24 @@ function renderMobileNavContent(
     return (
       <div className="space-y-4">
         <div>
-          <p className="section-label mb-2 px-3">By Category</p>
+          <p className="mb-2 px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400">Categories</p>
           <MobileLinkList items={item.categories} onNavigate={onNavigate} />
         </div>
-        <div className="rounded-lg bg-surface px-3 py-2 border border-border-light">
-          <p className="section-label mb-1">{item.sidebar.title}</p>
+        <div className="rounded-lg border border-gray-100 bg-slate-50 p-3">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">{item.sidebar.title}</p>
+          <p className="text-xs text-slate-600 mb-2">{item.sidebar.description}</p>
           <Link
             href={item.sidebar.href}
-            className="inline-flex min-h-[44px] items-center text-sm font-semibold text-accent hover:underline"
+            className="inline-flex min-h-[40px] items-center text-sm font-semibold text-accent hover:underline"
             onClick={onNavigate}
           >
             {item.sidebar.linkLabel} →
           </Link>
         </div>
-        <div className="rounded-lg bg-surface px-3 py-2 border border-border-light">
+        <div className="rounded-lg border border-gray-100 bg-slate-50 p-3">
           <Link
             href={item.highlight.href}
-            className="inline-flex min-h-[44px] items-center text-sm font-semibold text-accent hover:underline"
+            className="inline-flex min-h-[40px] items-center text-sm font-semibold text-accent hover:underline"
             onClick={onNavigate}
           >
             {item.highlight.linkLabel} →
@@ -120,7 +124,7 @@ function renderMobileNavContent(
         {item.sections.map((section) => (
           <div key={section.title ?? section.items[0]?.href}>
             {section.title && (
-              <p className="section-label mb-2 px-3">{section.title}</p>
+              <p className="mb-2 px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400">{section.title}</p>
             )}
             <MobileLinkList items={section.items} onNavigate={onNavigate} />
           </div>
@@ -138,12 +142,18 @@ function renderMobileNavContent(
 
 export default function MobileNav({ isLoggedIn: _propLoggedIn }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const panelId = useId();
   const { user, signOut } = useAuth();
   const close = useCallback(() => setIsOpen(false), []);
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
     };
@@ -169,20 +179,21 @@ export default function MobileNav({ isLoggedIn: _propLoggedIn }: MobileNavProps)
     <>
       <button
         type="button"
-        className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-text-primary transition-colors hover:bg-primary/5 active:bg-primary/10 lg:hidden"
+        className="inline-flex h-10 items-center justify-center gap-1.5 rounded-lg border border-border bg-surface px-2.5 text-primary shadow-xs transition-colors hover:bg-primary/5 active:bg-primary/10 lg:hidden"
         aria-expanded={isOpen}
         aria-controls={panelId}
-        aria-label={isOpen ? "Close menu" : "Open menu"}
+        aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
         onClick={() => setIsOpen((current) => !current)}
       >
-        {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        {isOpen ? <X className="h-5 w-5 text-primary" /> : <Menu className="h-5 w-5 text-primary" />}
+        <span className="text-xs font-semibold text-primary">Menu</span>
       </button>
 
-      {isOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
+      {isOpen && mounted && createPortal(
+        <div className="fixed inset-0 z-[99999] lg:hidden" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
             aria-hidden="true"
             onClick={close}
           />
@@ -190,56 +201,53 @@ export default function MobileNav({ isLoggedIn: _propLoggedIn }: MobileNavProps)
           {/* Drawer */}
           <div
             id={panelId}
-            className="fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col bg-surface shadow-2xl transition-transform"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Mobile navigation"
+            className="fixed inset-y-0 right-0 z-[100000] flex w-full max-w-sm flex-col bg-white shadow-2xl transition-transform"
           >
-            <div className="flex h-16 items-center justify-between border-b border-border px-5">
-              <span className="text-base font-bold text-primary">Menu</span>
+            <div className="flex h-16 items-center justify-between border-b border-gray-200 px-5 bg-white">
+              <span className="text-base font-bold text-primary">Explore Nepal</span>
               <button
                 type="button"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-text-secondary hover:bg-primary/5"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200"
                 aria-label="Close menu"
                 onClick={close}
               >
-                <X className="h-5 w-5" />
+                <X className="h-6 w-6 text-slate-700" />
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto px-5 py-4 pb-12">
+            <div className="flex-1 overflow-y-auto px-5 py-4 pb-16 bg-white">
               {/* Prominent Action Button for Mobile */}
               <div className="mb-4">
                 <Link
                   href={RECOMMEND_PLACE_PATH}
                   onClick={close}
-                  className="flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-accent/90"
+                  className="flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-accent/90"
                 >
                   <PlusCircle className="h-4 w-4" />
                   {RECOMMEND_COPY.navLabel}
                 </Link>
               </div>
 
-              {/* Navigation items */}
+              {/* Navigation items (First accordion open by default for immediate discoverability) */}
               <div className="space-y-1">
-                {MAIN_NAV.map((item) => (
-                  <MobileAccordion key={item.label} label={item.label}>
+                {MAIN_NAV.map((item, index) => (
+                  <MobileAccordion key={item.label} label={item.label} defaultOpen={index === 0}>
                     {renderMobileNavContent(item, close)}
                   </MobileAccordion>
                 ))}
               </div>
 
               {/* Account Section */}
-              <div className="mt-6 border-t border-border pt-5">
+              <div className="mt-6 border-t border-gray-200 pt-5">
                 {user ? (
                   <div className="space-y-3">
-                    <div className="flex items-center gap-3 rounded-lg bg-primary/5 p-3">
+                    <div className="flex items-center gap-3 rounded-lg bg-slate-50 border border-gray-200 p-3">
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
                         {user.name.charAt(0).toUpperCase()}
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-semibold text-primary">{user.name}</p>
-                        <p className="truncate text-xs text-text-secondary">{user.email}</p>
+                        <p className="truncate text-sm font-bold text-primary">{user.name}</p>
+                        <p className="truncate text-xs text-slate-500">{user.email}</p>
                       </div>
                       {user.isAdmin && (
                         <span className="inline-flex items-center gap-1 rounded bg-secondary/15 px-2 py-0.5 text-[10px] font-semibold text-secondary">
@@ -254,18 +262,18 @@ export default function MobileNav({ isLoggedIn: _propLoggedIn }: MobileNavProps)
                     </div>
 
                     {user.isAdmin && (
-                      <div className="border-t border-border-light pt-2">
-                        <p className="section-label mb-2 px-3">Administration</p>
+                      <div className="border-t border-gray-100 pt-2">
+                        <p className="mb-2 px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400">Administration</p>
                         <Link
                           href="/admin/submissions"
-                          className="flex min-h-[44px] items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-primary hover:bg-primary/5"
+                          className="flex min-h-[44px] items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-primary hover:bg-slate-100"
                           onClick={close}
                         >
                           Review Submissions
                         </Link>
                         <Link
                           href="/admin/questions"
-                          className="flex min-h-[44px] items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-primary hover:bg-primary/5"
+                          className="flex min-h-[44px] items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-primary hover:bg-slate-100"
                           onClick={close}
                         >
                           Review Questions
@@ -273,7 +281,7 @@ export default function MobileNav({ isLoggedIn: _propLoggedIn }: MobileNavProps)
                       </div>
                     )}
 
-                    <div className="border-t border-border-light pt-2">
+                    <div className="border-t border-gray-100 pt-2">
                       <button
                         type="button"
                         onClick={handleSignOut}
@@ -286,7 +294,7 @@ export default function MobileNav({ isLoggedIn: _propLoggedIn }: MobileNavProps)
                   </div>
                 ) : (
                   <div className="space-y-3">
-                    <p className="text-xs text-text-muted">Sign in to save favorite places and join the community</p>
+                    <p className="text-xs text-slate-500">Sign in to save favorite places and join the community</p>
                     <Link
                       href="/sign-in"
                       className="flex min-h-[44px] w-full items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-light"
@@ -299,7 +307,8 @@ export default function MobileNav({ isLoggedIn: _propLoggedIn }: MobileNavProps)
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
