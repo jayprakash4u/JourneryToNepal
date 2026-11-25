@@ -190,7 +190,7 @@ export default function MobileNav({ isLoggedIn: _propLoggedIn }: MobileNavProps)
       </button>
 
       {isOpen && mounted && createPortal(
-        <div className="fixed inset-0 z-[99999] lg:hidden" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+        <div className="fixed inset-0 z-[99999] flex justify-end lg:hidden" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
           {/* Backdrop */}
           <div
             className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
@@ -201,9 +201,9 @@ export default function MobileNav({ isLoggedIn: _propLoggedIn }: MobileNavProps)
           {/* Drawer */}
           <div
             id={panelId}
-            className="fixed inset-y-0 right-0 z-[100000] flex w-full max-w-sm flex-col bg-white shadow-2xl transition-transform"
+            className="relative z-10 flex h-full w-full max-w-xs sm:max-w-sm flex-col bg-white shadow-2xl"
           >
-            <div className="flex h-16 items-center justify-between border-b border-gray-200 px-5 bg-white">
+            <div className="flex h-16 shrink-0 items-center justify-between border-b border-gray-200 px-5 bg-white">
               <span className="text-base font-bold text-primary">Explore Nepal</span>
               <button
                 type="button"
@@ -215,7 +215,7 @@ export default function MobileNav({ isLoggedIn: _propLoggedIn }: MobileNavProps)
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto px-5 py-4 pb-16 bg-white">
+            <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-5 py-4 pb-24 bg-white">
               {/* Prominent Action Button for Mobile */}
               <div className="mb-4">
                 <Link
