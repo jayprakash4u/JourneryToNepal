@@ -21,7 +21,7 @@ export default function Container({
   return (
     <Component
       className={classNames(
-        "mx-auto w-full px-6",
+        "mx-auto w-full px-4 sm:px-6",
         narrow ? "max-w-3xl" : "max-w-content",
         className
       )}

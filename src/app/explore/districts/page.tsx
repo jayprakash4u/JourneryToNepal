@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Header, Footer, Container } from "@/components";
 import DistrictsExplorer from "@/components/districts/DistrictsExplorer";
 import DistrictsHero from "@/components/districts/DistrictsHero";
@@ -11,7 +12,9 @@ export default function DistrictsPage() {
         <DistrictsHero />
         <Container className="py-10 lg:py-14">
           <PopularDistricts />
-          <DistrictsExplorer />
+          <Suspense fallback={<div className="py-12 text-center text-text-secondary">Loading districts...</div>}>
+            <DistrictsExplorer />
+          </Suspense>
         </Container>
       </main>
       <Footer />

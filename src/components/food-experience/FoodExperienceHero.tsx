@@ -45,7 +45,7 @@ export default function FoodExperienceHero() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-[75vh] min-h-[28rem] w-full overflow-hidden bg-primary"
+      className="relative flex min-h-[70vh] sm:min-h-[75vh] lg:h-[75vh] w-full items-center justify-center overflow-hidden bg-primary py-12 sm:py-16 lg:py-0"
     >
       {FOOD_EXPERIENCE_HERO.useVideo ? (
         <video
@@ -77,7 +77,7 @@ export default function FoodExperienceHero() {
         aria-hidden
       />
 
-      <div className="relative z-10 flex h-full items-center justify-center px-6 py-12">
+      <div className="relative z-10 flex w-full items-center justify-center px-4 sm:px-6">
         <div className="mx-auto w-full max-w-3xl text-center">
           <p className="mb-4 inline-flex items-center gap-2 rounded-md border border-white/25 bg-white/10 px-3 py-1.5 text-sm font-medium text-white/90 backdrop-blur-sm">
             <Sandwich className="h-4 w-4" aria-hidden />

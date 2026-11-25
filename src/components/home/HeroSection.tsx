@@ -107,7 +107,7 @@ export default function HeroSection() {
     return (
       <section
         ref={sectionRef}
-        className="relative h-[calc(100svh-4rem)] min-h-[28rem] w-full overflow-hidden bg-primary"
+        className="relative flex min-h-[calc(100svh-4rem)] sm:h-[calc(100svh-4rem)] w-full items-center justify-center overflow-hidden bg-primary"
         aria-label="Nepal hero"
       >
         <video
@@ -131,7 +131,7 @@ export default function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-[calc(100svh-4rem)] min-h-[28rem] w-full overflow-hidden bg-primary"
+      className="relative flex min-h-[calc(100svh-4rem)] sm:h-[calc(100svh-4rem)] w-full items-center justify-center overflow-hidden bg-primary"
       aria-label="Nepal hero"
     >
       {HERO_VIDEOS.map((video, index) => (

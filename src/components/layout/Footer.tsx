@@ -85,9 +85,9 @@ export default function Footer() {
     <footer className="mt-auto border-t border-primary-light/20 bg-primary text-white">
       <div className="h-1 bg-gradient-to-r from-accent via-secondary to-primary-light" aria-hidden />
 
-      <Container className="py-14 lg:py-16">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
-          <div className="sm:col-span-2 lg:col-span-4">
+      <Container className="py-12 sm:py-14 lg:py-16">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+          <div className="col-span-2 sm:col-span-2 lg:col-span-4">
             <Link
               href="/"
               className="inline-flex rounded-md bg-white px-4 py-3 transition-opacity hover:opacity-90"
@@ -124,7 +124,7 @@ export default function Footer() {
           </div>
 
           {FOOTER_COLUMNS.map((column) => (
-            <div key={column.title} className="lg:col-span-2 lg:col-start-auto">
+            <div key={column.title} className="col-span-1 lg:col-span-2">
               <FooterLinkColumn title={column.title} links={column.links} />
             </div>
           ))}

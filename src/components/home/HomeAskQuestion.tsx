@@ -15,7 +15,7 @@ export default function HomeAskQuestion({ places }: HomeAskQuestionProps) {
   if (places.length === 0) return null;
 
   return (
-    <div className="border border-border bg-surface p-6 shadow-sm md:p-8">
+    <div className="rounded-xl border border-border bg-surface p-5 sm:p-6 shadow-sm md:p-8">
       <div className="mb-5 flex items-start gap-3">
         <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
           <HelpCircle className="h-5 w-5" aria-hidden />

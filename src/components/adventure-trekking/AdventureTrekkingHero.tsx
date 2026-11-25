@@ -17,7 +17,7 @@ export default function AdventureTrekkingHero() {
     event.preventDefault();
     const trimmed = query.trim();
     if (!trimmed) return;
-    router.push(`/search?q=${encodeURIComponent(trimmed)}`);
+    router.push(`/explore/districts?search=${encodeURIComponent(trimmed)}`);
   };
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function AdventureTrekkingHero() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-[75vh] min-h-[28rem] w-full overflow-hidden bg-primary"
+      className="relative flex min-h-[70vh] sm:min-h-[75vh] lg:h-[75vh] w-full items-center justify-center overflow-hidden bg-primary py-12 sm:py-16 lg:py-0"
     >
       <video
         ref={videoRef}
@@ -71,7 +71,7 @@ export default function AdventureTrekkingHero() {
         aria-hidden
       />
 
-      <div className="relative z-10 flex h-full items-center justify-center px-6 py-12">
+      <div className="relative z-10 flex w-full items-center justify-center px-4 sm:px-6">
         <div className="mx-auto w-full max-w-3xl text-center">
           <h1 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
             {ADVENTURE_HERO.headline}

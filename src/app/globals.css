@@ -21,9 +21,21 @@
   --spacing-18: 4.5rem;
   --spacing-22: 5.5rem;
 
-  --spacing-section-y: 5rem;
-  --spacing-section-y-lg: 7rem;
+  --spacing-section-y: 3.25rem;
+  --spacing-section-y-lg: 6rem;
   --width-content: 80rem;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --spacing-section-y: 4.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --spacing-section-y: 6rem;
+  }
 }
 
 @layer base {

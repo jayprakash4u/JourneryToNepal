@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import DistrictCard from "@/components/districts/DistrictCard";
 import DistrictFiltersBar from "@/components/districts/DistrictFiltersBar";
 import DistrictMapView from "@/components/districts/DistrictMapView";
@@ -18,7 +19,15 @@ import { DISTRICTS_COPY } from "@/lib/districts-copy";
 type ViewMode = "grid" | "map";
 
 export default function DistrictsExplorer() {
-  const [search, setSearch] = useState("");
+  const searchParams = useSearchParams();
+  const urlSearch = searchParams.get("search") || searchParams.get("q") || "";
+  const [search, setSearch] = useState(urlSearch);
+
+  useEffect(() => {
+    if (urlSearch) {
+      setSearch(urlSearch);
+    }
+  }, [urlSearch]);
   const [province, setProvince] = useState<ProvinceId | "all">("all");
   const [category, setCategory] = useState<DistrictCategory | "all">("all");
   const [popularity, setPopularity] = useState<DistrictPopularity | "all">("all");
